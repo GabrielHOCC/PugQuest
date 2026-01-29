@@ -109,7 +109,7 @@ const Dashboard: React.FC = () => {
         <section>
           <div className="flex items-center gap-4 mb-8 md:mb-10 group">
             <div className="p-2 bg-amber-900/20 rounded-xl border border-amber-700/30 group-hover:scale-110 transition-transform">
-              <Shield className="text-amber-500" size={18} md={20} />
+              <Shield className="text-amber-500" size={20} />
             </div>
             <h2 className="text-lg md:text-xl font-medieval text-stone-200 uppercase tracking-widest">Grimórios que Você Mestra</h2>
           </div>
@@ -124,7 +124,7 @@ const Dashboard: React.FC = () => {
         <section>
           <div className="flex items-center gap-4 mb-8 md:mb-10 group">
             <div className="p-2 bg-blue-900/20 rounded-xl border border-blue-700/30 group-hover:scale-110 transition-transform">
-              <Users className="text-blue-500" size={18} md={20} />
+              <Users className="text-blue-500" size={20} />
             </div>
             <h2 className="text-lg md:text-xl font-medieval text-stone-200 uppercase tracking-widest">Caminhos Trilhandos</h2>
           </div>
@@ -157,7 +157,7 @@ const Dashboard: React.FC = () => {
         <form onSubmit={handleJoinCampaign} className="space-y-8 md:space-y-10">
           <div className="text-center">
             <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-amber-500/10 flex items-center justify-center mx-auto mb-4 md:mb-6 border border-amber-500/20 shadow-[0_0_30px_rgba(245,158,11,0.1)]">
-              <Key className="text-amber-500 animate-float" size={28} md={32} />
+              <Key className="text-amber-500 animate-float" size={32} />
             </div>
             <p className="text-stone-400 font-story text-base md:text-lg mb-6 md:mb-8">Insira o código sagrado de 6 caracteres fornecido pelo seu mestre para se vincular a este reino.</p>
           </div>
@@ -240,14 +240,14 @@ const CampaignCard: React.FC<{ campaign: Campaign, role: string }> = ({ campaign
 
         <div className="flex items-center justify-between border-t border-white/5 pt-5 md:pt-6">
           <div className="flex items-center gap-2 md:gap-3 text-stone-500 text-[9px] md:text-[11px] font-medieval uppercase tracking-widest">
-            <Users size={12} md={14} /> {membersCount} {membersCount === 1 ? 'Jogador' : 'Jogadores'}
+            <Users size={14} /> {membersCount} {membersCount === 1 ? 'Jogador' : 'Jogadores'}
           </div>
           
           <button 
             onClick={copyCode}
             className="flex items-center gap-1.5 md:gap-2 text-stone-500 hover:text-amber-500 transition-all text-[9px] md:text-[11px] font-medieval uppercase tracking-widest group/btn"
           >
-            {copied ? <Check size={12} md={14} className="text-emerald-500" /> : <Copy size={12} md={14} />}
+            {copied ? <Check size={14} className="text-emerald-500" /> : <Copy size={14} />}
             {campaign.inviteCode}
           </button>
         </div>
@@ -258,7 +258,7 @@ const CampaignCard: React.FC<{ campaign: Campaign, role: string }> = ({ campaign
 
 const EmptyState: React.FC<{ message: string }> = ({ message }) => (
   <div className="col-span-full py-12 md:py-20 flex flex-col items-center justify-center bg-stone-900/40 rounded-3xl border border-dashed border-amber-900/20 px-4 text-center">
-    <ScrollText className="text-stone-700 mb-4" size={40} md={48} />
+    <ScrollText className="text-stone-700 mb-4" size={48} />
     <p className="text-stone-500 font-medieval tracking-[0.2em] uppercase text-[10px] md:text-xs">{message}</p>
   </div>
 );

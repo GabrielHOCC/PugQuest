@@ -70,23 +70,23 @@ const Landing: React.FC = () => {
 
   return (
     <div className="min-h-screen overflow-x-hidden relative">
-      <header className="absolute top-0 left-0 w-full pt-8 md:pt-12 pb-6 z-20 flex flex-col items-center px-4">
+      <header className="absolute top-0 left-0 w-full pt-6 md:pt-12 pb-4 z-20 flex flex-col items-center px-4">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="flex flex-col items-center gap-1 md:gap-2"
+          className="flex flex-col items-center gap-1"
         >
           <div className="flex items-center gap-2 md:gap-4">
             <div className="hidden sm:block h-px w-8 md:w-12 bg-gradient-to-r from-transparent to-amber-500/50" />
-            <Sword className="text-amber-500/40 w-4 h-4 md:w-5 md:h-5" />
-            <h1 className="font-medieval text-2xl md:text-5xl text-stone-100 tracking-[0.2em] md:tracking-[0.4em] uppercase amber-glow">
+            <Sword className="text-amber-500/40 w-5 h-5" />
+            <h1 className="font-medieval text-xl md:text-5xl text-stone-100 tracking-[0.2em] md:tracking-[0.4em] uppercase amber-glow">
               Pug Quest
             </h1>
-            <Sword className="text-amber-500/40 w-4 h-4 md:w-5 md:h-5 scale-x-[-1]" />
+            <Sword className="text-amber-500/40 w-5 h-5 scale-x-[-1]" />
             <div className="hidden sm:block h-px w-8 md:w-12 bg-gradient-to-l from-transparent to-amber-500/50" />
           </div>
-          <span className="font-medieval text-[7px] md:text-[9px] text-amber-500/40 tracking-[0.5em] md:tracking-[0.8em] uppercase text-center">O Guia do Mestre</span>
+          <span className="font-medieval text-[6px] md:text-[9px] text-amber-500/40 tracking-[0.5em] md:tracking-[0.8em] uppercase text-center">O Guia do Mestre</span>
         </motion.div>
       </header>
 
@@ -112,7 +112,7 @@ const Landing: React.FC = () => {
         ))}
       </div>
 
-      <section className="relative min-h-screen flex flex-col justify-center items-center px-6 pt-32 pb-20 md:pt-20">
+      <section className="relative min-h-screen flex flex-col justify-center items-center px-6 pt-44 pb-20 md:pt-20">
         <div className="relative z-10 max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 items-center">
           <motion.div 
             initial={{ opacity: 0, x: -30 }}
@@ -125,7 +125,7 @@ const Landing: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               className="inline-flex items-center gap-3 bg-amber-950/40 border border-amber-700/30 rounded-2xl px-4 py-1.5 md:px-5 md:py-2 backdrop-blur-md mb-6 md:mb-8"
             >
-              <Sparkles className="w-3 h-3 md:w-4 md:h-4 text-amber-500 animate-pulse" />
+              <Sparkles className="w-4 h-4 text-amber-500 animate-pulse" />
               <span className="font-medieval text-amber-200 text-[8px] md:text-[10px] font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase">Crônicas de uma Nova Era</span>
             </motion.div>
 
@@ -166,7 +166,7 @@ const Landing: React.FC = () => {
             <div className="absolute -inset-8 bg-amber-600/10 rounded-full blur-[100px] animate-pulse" />
             <Card className="!p-12 !bg-stone-900/90 border-amber-900/40 shadow-2xl relative overflow-visible">
                <div className="absolute -top-3 -left-3 w-12 h-12 bg-stone-900 border border-amber-500/30 rounded-xl flex items-center justify-center rotate-45">
-                 <Shield className="w-5 h-5 text-amber-500 -rotate-45" />
+                 <Shield className="w-6 h-6 text-amber-500 -rotate-45" />
                </div>
                <div className="text-center relative">
                  <div className="w-20 h-20 mx-auto mb-10 bg-gradient-to-b from-amber-950/60 to-transparent rounded-full flex items-center justify-center border border-amber-500/20">
@@ -246,7 +246,7 @@ const Landing: React.FC = () => {
               className="text-center py-4 md:py-6"
             >
               <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-emerald-500/10 flex items-center justify-center mx-auto mb-6 md:mb-8 border border-emerald-500/30 shadow-[0_0_30px_rgba(16,185,129,0.1)]">
-                <Send className="text-emerald-500 animate-float" size={32} md={40} />
+                <Send className="text-emerald-500 animate-float" size={40} />
               </div>
               <h4 className="font-medieval text-xl md:text-2xl text-stone-100 mb-4 uppercase tracking-widest amber-glow">O Vínculo Está Quase Completo!</h4>
               <p className="text-stone-300 font-story text-base md:text-lg mb-8 leading-relaxed">
@@ -263,7 +263,7 @@ const Landing: React.FC = () => {
             <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               <div className="text-center mb-8 md:mb-10">
                 <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-amber-500/10 flex items-center justify-center mx-auto mb-4 md:mb-6 border border-amber-500/30 shadow-[0_0_20px_rgba(251,191,36,0.1)]">
-                  <ShieldCheck className="text-amber-500" size={24} md={28} />
+                  <ShieldCheck className="text-amber-500" size={32} />
                 </div>
                 <p className="text-amber-200/50 font-story text-sm md:text-base uppercase">
                   {authMode === 'login' ? 'Retorne ao seu tomo de aventuras.' : 'Crie sua conta para mestrar ou jogar.'}

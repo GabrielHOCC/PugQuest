@@ -6,7 +6,7 @@ import {
   Users, Map, BookOpen, Skull, Settings, Info as InfoIcon, Swords, 
   ChevronLeft, Sparkles, Shield, Trash2, Eye, EyeOff, Edit2, MapPin, Check,
   Upload, X, Heart, HelpCircle, AlertTriangle, ChevronRight, Compass, Navigation,
-  User as UserIcon, Search
+  User as UserIcon, Search, ChevronDown
 } from 'lucide-react';
 import { Store } from '../services/store.js';
 import { 
@@ -309,23 +309,24 @@ const CampaignDetail: React.FC = () => {
         </main>
       </div>
 
+      {/* MODAL DE VISUALIZAÇÃO */}
       <Modal isOpen={isViewOpen} onClose={() => setIsViewOpen(false)} title={selectedItem?.name || "Registro"} size="xl">
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-6 md:gap-8">
           {activeTab === 'LOCATIONS' && selectedItem && (
-            <div className="flex justify-between items-center bg-slate-950/40 border border-stone-800 p-4 rounded-2xl mb-2">
-              <div className="flex items-center gap-3 text-white font-medieval text-xs uppercase tracking-widest">
-                <MapPin size={16} className="text-amber-500" />
-                <span>{selectedItem?.name}</span>
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-stone-950/40 border border-amber-900/10 p-4 rounded-2xl mb-2 gap-4">
+              <div className="flex items-center gap-3 text-white font-medieval text-xs uppercase tracking-widest truncate max-w-full">
+                <MapPin size={16} className="text-amber-500 shrink-0" />
+                <span className="truncate">{selectedItem?.name}</span>
               </div>
               
-              <div className="relative group min-w-[200px]">
+              <div className="relative group w-full sm:w-auto sm:min-w-[220px]">
                 <select 
                   value={selectedItem?.id}
                   onChange={(e) => {
                     const newLoc = locations.find(l => l.id === e.target.value);
                     if (newLoc) setSelectedItem(newLoc);
                   }}
-                  className="w-full bg-stone-900 border border-stone-700 rounded-xl px-4 py-2 text-white font-story text-sm outline-none appearance-none cursor-pointer focus:border-amber-500 transition-all shadow-lg"
+                  className="w-full bg-stone-900 border border-amber-900/20 rounded-xl px-4 py-2.5 text-white font-story text-sm outline-none appearance-none cursor-pointer focus:border-amber-500 transition-all shadow-lg"
                 >
                   <optgroup label="Locais Principais" className="bg-stone-900 text-amber-500 font-medieval uppercase text-[10px]">
                     {locations.filter(l => !l.parentId).map(l => (
@@ -340,45 +341,47 @@ const CampaignDetail: React.FC = () => {
                     </optgroup>
                   )}
                 </select>
-                <ChevronRight size={14} className="absolute right-4 top-1/2 -translate-y-1/2 rotate-90 text-stone-500 pointer-events-none" />
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-amber-500/40">
+                  <ChevronDown size={14} />
+                </div>
               </div>
             </div>
           )}
 
           {selectedItem && (
-            <div className="w-full flex justify-center bg-black/60 rounded-3xl border border-amber-900/20 p-4 relative overflow-hidden group shadow-inner">
-               <div className="absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 border-amber-500/30 rounded-tl-3xl" />
-               <div className="absolute bottom-0 right-0 w-12 h-12 border-b-2 border-r-2 border-amber-500/30 rounded-br-3xl" />
-               <img src={selectedItem?.imageUrl || `https://picsum.photos/seed/${selectedItem?.id}/1200/800`} className="max-h-[500px] w-full object-cover rounded-2xl shadow-2xl transition-transform duration-1000 group-hover:scale-[1.02]" alt="Illustration" />
+            <div className="w-full flex justify-center bg-black/60 rounded-2xl md:rounded-3xl border border-amber-900/20 p-2 md:p-4 relative overflow-hidden group shadow-inner">
+               <div className="absolute top-0 left-0 w-8 md:w-12 h-8 md:h-12 border-t-2 border-l-2 border-amber-500/30 rounded-tl-2xl md:rounded-tl-3xl" />
+               <div className="absolute bottom-0 right-0 w-8 md:w-12 h-8 md:h-12 border-b-2 border-r-2 border-amber-500/30 rounded-br-2xl md:rounded-br-3xl" />
+               <img src={selectedItem?.imageUrl || `https://picsum.photos/seed/${selectedItem?.id}/1200/800`} className="max-h-[300px] md:max-h-[500px] w-full object-cover rounded-xl md:rounded-2xl shadow-2xl transition-transform duration-1000 group-hover:scale-[1.01]" alt="Illustration" />
             </div>
           )}
 
-          <div className="space-y-8 px-2">
+          <div className="space-y-6 md:space-y-8">
              {activeTab === 'CHARACTERS' && selectedItem && (
-               <div className="flex flex-wrap gap-4">
-                 <div className={`flex items-center gap-2 px-4 py-2 rounded-xl border font-medieval text-[10px] uppercase tracking-widest ${getTypeColor(selectedItem?.characterType)} shadow-sm`}>
+               <div className="flex flex-wrap gap-2 md:gap-4">
+                 <div className={`flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-xl border font-medieval text-[9px] md:text-[10px] uppercase tracking-widest ${getTypeColor(selectedItem?.characterType)} shadow-sm`}>
                    <UserIcon size={14} /> {selectedItem?.characterType || 'NPC'}
                  </div>
-                 <div className={`flex items-center gap-2 px-4 py-2 rounded-xl border font-medieval text-[10px] uppercase tracking-widest ${getStatusDisplay(selectedItem?.status || ItemStatus.UNKNOWN).color} shadow-sm`}>
+                 <div className={`flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-xl border font-medieval text-[9px] md:text-[10px] uppercase tracking-widest ${getStatusDisplay(selectedItem?.status || ItemStatus.UNKNOWN).color} shadow-sm`}>
                    {getStatusDisplay(selectedItem?.status || ItemStatus.UNKNOWN).icon} {getStatusDisplay(selectedItem?.status || ItemStatus.UNKNOWN).label}
                  </div>
                </div>
              )}
 
              <section className="break-words">
-               <span className="text-amber-500 font-medieval uppercase tracking-[0.3em] text-[10px] mb-4 block opacity-60 flex items-center gap-2">
+               <span className="text-amber-500 font-medieval uppercase tracking-[0.3em] text-[10px] mb-3 md:mb-4 block opacity-60 flex items-center gap-2">
                  <div className="w-4 h-px bg-amber-500/30" /> DESCRIÇÃO
                </span>
-               <p className="font-story text-stone-200 text-lg leading-relaxed whitespace-pre-wrap">{selectedItem?.description}</p>
+               <p className="font-story text-stone-200 text-base md:text-lg leading-relaxed whitespace-pre-wrap">{selectedItem?.description}</p>
              </section>
 
              {activeTab === 'LOCATIONS' && selectedItem && locations.some(l => l.parentId === selectedItem?.id) && (
-               <section className="pt-8 border-t border-amber-900/10">
-                 <div className="flex items-center gap-3 mb-6">
+               <section className="pt-6 md:pt-8 border-t border-amber-900/10">
+                 <div className="flex items-center gap-3 mb-4 md:mb-6">
                    <div className="p-2 bg-blue-500/10 rounded-lg border border-blue-500/20 text-blue-400">
                      <Navigation size={18} />
                    </div>
-                   <h3 className="text-stone-100 font-medieval text-sm uppercase tracking-[0.2em]">Sub-locais em {selectedItem?.name}</h3>
+                   <h3 className="text-stone-100 font-medieval text-[11px] md:text-sm uppercase tracking-[0.2em]">Sub-locais exploráveis</h3>
                  </div>
                  
                  <div className="grid grid-cols-1 gap-3">
@@ -386,15 +389,15 @@ const CampaignDetail: React.FC = () => {
                      <button 
                        key={sub.id}
                        onClick={() => setSelectedItem(sub)}
-                       className="flex items-center justify-between p-5 bg-[#0a0f1d] border border-white/5 rounded-2xl hover:border-amber-500/40 hover:bg-amber-500/5 transition-all group shadow-xl"
+                       className="flex items-center justify-between p-4 md:p-5 bg-[#0a0f1d] border border-white/5 rounded-xl md:rounded-2xl hover:border-amber-500/40 hover:bg-amber-500/5 transition-all group shadow-xl"
                      >
-                       <div className="flex items-center gap-4">
-                         <div className="p-2 bg-stone-900 border border-amber-500/20 rounded-xl text-amber-500 group-hover:bg-amber-500 group-hover:text-stone-900 transition-all">
+                       <div className="flex items-center gap-3 md:gap-4">
+                         <div className="p-2 bg-stone-900 border border-amber-500/20 rounded-lg md:rounded-xl text-amber-500 group-hover:bg-amber-500 group-hover:text-stone-900 transition-all">
                            <Compass size={18} />
                          </div>
-                         <span className="font-story text-stone-300 text-lg font-bold group-hover:text-amber-400 transition-colors">{sub.name}</span>
+                         <span className="font-story text-stone-300 text-base md:text-lg font-bold group-hover:text-amber-400 transition-colors">{sub.name}</span>
                        </div>
-                       <ChevronRight size={20} className="text-stone-700 group-hover:text-amber-500 transition-all translate-x-0 group-hover:translate-x-1" />
+                       <ChevronRight size={18} className="text-stone-700 group-hover:text-amber-500 transition-all translate-x-0 group-hover:translate-x-1" />
                      </button>
                    ))}
                  </div>
@@ -402,24 +405,25 @@ const CampaignDetail: React.FC = () => {
              )}
 
              {selectedItem?.history && (
-               <section className="pt-8 border-t border-white/5 break-words">
-                 <span className="text-amber-500 font-medieval uppercase tracking-[0.3em] text-[10px] mb-4 block opacity-60 flex items-center gap-2">
+               <section className="pt-6 md:pt-8 border-t border-white/5 break-words">
+                 <span className="text-amber-500 font-medieval uppercase tracking-[0.3em] text-[10px] mb-3 md:mb-4 block opacity-60 flex items-center gap-2">
                    <div className="w-4 h-px bg-amber-500/30" /> CRÔNICAS & DETALHES
                  </span>
-                 <p className="font-story text-stone-400 text-base leading-relaxed whitespace-pre-wrap">{selectedItem.history}</p>
+                 <p className="font-story text-stone-400 text-sm md:text-base leading-relaxed whitespace-pre-wrap">{selectedItem.history}</p>
                </section>
              )}
           </div>
         </div>
       </Modal>
 
+      {/* FORMULÁRIO DE CRIAÇÃO/EDIÇÃO */}
       <Modal isOpen={isFormOpen} onClose={() => setIsFormOpen(false)} title={`${editMode ? 'Esculpir' : 'Forjar'} ${getTabLabel()}`} size="lg">
-        <form onSubmit={handleItemSubmit} className="space-y-8">
+        <form onSubmit={handleItemSubmit} className="space-y-6 md:space-y-8">
           <div className="space-y-2">
             <label className="text-[10px] font-medieval uppercase tracking-[0.2em] text-amber-500 mb-2 block opacity-60">Visual (Estandarte/Retrato)</label>
             <div 
               onClick={() => fileInputRef.current?.click()}
-              className="w-full aspect-video bg-black/40 border-2 border-dashed border-amber-900/20 rounded-3xl flex items-center justify-center cursor-pointer hover:border-amber-500/30 transition-all group overflow-hidden relative shadow-inner"
+              className="w-full aspect-video bg-black/40 border-2 border-dashed border-amber-900/20 rounded-2xl md:rounded-3xl flex items-center justify-center cursor-pointer hover:border-amber-500/30 transition-all group overflow-hidden relative shadow-inner"
             >
               {selectedItem?.imageUrl ? (
                 <>
@@ -434,7 +438,7 @@ const CampaignDetail: React.FC = () => {
               ) : (
                 <div className="flex flex-col items-center gap-4 text-amber-500/30">
                   <Upload size={40} className="animate-float" />
-                  <span className="text-xs uppercase font-medieval tracking-[0.3em]">Enviar Runa Visual</span>
+                  <span className="text-[10px] md:text-xs uppercase font-medieval tracking-[0.3em]">Enviar Runa Visual</span>
                 </div>
               )}
             </div>
@@ -444,20 +448,20 @@ const CampaignDetail: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
               <label className="text-[10px] font-medieval uppercase tracking-[0.2em] text-amber-500 mb-2 block opacity-60">Designação (Nome)</label>
-              <input required value={selectedItem?.name || ''} onChange={e => setSelectedItem({...selectedItem, name: e.target.value})} className="w-full bg-stone-950 border border-stone-800 rounded-2xl p-4 text-white focus:border-amber-500 outline-none font-story text-lg shadow-inner transition-all" />
+              <input required value={selectedItem?.name || ''} onChange={e => setSelectedItem({...selectedItem, name: e.target.value})} className="w-full bg-stone-950 border border-stone-800 rounded-xl md:rounded-2xl p-4 text-white focus:border-amber-500 outline-none font-story text-base md:text-lg shadow-inner transition-all" />
             </div>
 
             {activeTab === 'CHARACTERS' && (
               <div className="space-y-2">
                 <label className="text-[10px] font-medieval uppercase tracking-[0.2em] text-amber-500 mb-2 block opacity-60">Linhagem / Natureza</label>
                 <div className="relative">
-                  <select value={selectedItem?.characterType || 'NPC'} onChange={e => setSelectedItem({...selectedItem, characterType: e.target.value})} className="w-full bg-stone-950 border border-stone-800 rounded-2xl p-4 text-white outline-none appearance-none font-story text-lg focus:border-amber-500 transition-all shadow-inner">
+                  <select value={selectedItem?.characterType || 'NPC'} onChange={e => setSelectedItem({...selectedItem, characterType: e.target.value})} className="w-full bg-stone-950 border border-stone-800 rounded-xl md:rounded-2xl p-4 text-white outline-none appearance-none font-story text-base md:text-lg focus:border-amber-500 transition-all shadow-inner cursor-pointer">
                     <option value="NPC" className="bg-stone-900">NPC Comum</option>
                     <option value="Aliado" className="bg-stone-900">Aliado</option>
                     <option value="Neutro" className="bg-stone-900">Neutro</option>
                     <option value="Inimigo" className="bg-stone-900">Inimigo</option>
                   </select>
-                  <ChevronRight size={18} className="absolute right-4 top-1/2 -translate-y-1/2 rotate-90 text-stone-500 pointer-events-none" />
+                  <ChevronDown size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-stone-500 pointer-events-none" />
                 </div>
               </div>
             )}
@@ -466,13 +470,13 @@ const CampaignDetail: React.FC = () => {
               <div className="space-y-2">
                 <label className="text-[10px] font-medieval uppercase tracking-[0.2em] text-amber-500 mb-2 block opacity-60">Reino Superior (Pai)</label>
                 <div className="relative">
-                  <select value={selectedItem?.parentId || ''} onChange={e => setSelectedItem({...selectedItem, parentId: e.target.value})} className="w-full bg-stone-950 border border-stone-800 rounded-2xl p-4 text-white outline-none appearance-none font-story text-lg focus:border-amber-500 transition-all shadow-inner">
+                  <select value={selectedItem?.parentId || ''} onChange={e => setSelectedItem({...selectedItem, parentId: e.target.value})} className="w-full bg-stone-950 border border-stone-800 rounded-xl md:rounded-2xl p-4 text-white outline-none appearance-none font-story text-base md:text-lg focus:border-amber-500 transition-all shadow-inner cursor-pointer">
                     <option value="" className="bg-stone-900">Nenhum (Local Principal)</option>
                     {locations.filter(l => l.id !== selectedItem?.id).map(loc => (
                       <option key={loc.id} value={loc.id} className="bg-stone-900">{loc.name}</option>
                     ))}
                   </select>
-                  <ChevronRight size={18} className="absolute right-4 top-1/2 -translate-y-1/2 rotate-90 text-stone-500 pointer-events-none" />
+                  <ChevronDown size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-stone-500 pointer-events-none" />
                 </div>
               </div>
             )}
@@ -481,7 +485,7 @@ const CampaignDetail: React.FC = () => {
               <div className="space-y-2">
                 <label className="text-[10px] font-medieval uppercase tracking-[0.2em] text-amber-500 mb-2 block opacity-60">Categoria</label>
                 <div className="relative">
-                  <select value={selectedItem?.category || 'Outro'} onChange={e => setSelectedItem({...selectedItem, category: e.target.value})} className="w-full bg-stone-950 border border-stone-800 rounded-2xl p-4 text-white outline-none appearance-none font-story text-lg focus:border-amber-500 transition-all shadow-inner">
+                  <select value={selectedItem?.category || 'Outro'} onChange={e => setSelectedItem({...selectedItem, category: e.target.value})} className="w-full bg-stone-950 border border-stone-800 rounded-xl md:rounded-2xl p-4 text-white outline-none appearance-none font-story text-base md:text-lg focus:border-amber-500 transition-all shadow-inner cursor-pointer">
                     <option value="Regra" className="bg-stone-900">Regra</option>
                     <option value="História/Lore" className="bg-stone-900">História/Lore</option>
                     <option value="Mapa" className="bg-stone-900">Mapa</option>
@@ -490,7 +494,7 @@ const CampaignDetail: React.FC = () => {
                     <option value="Segredo" className="bg-stone-900">Segredo</option>
                     <option value="Outro" className="bg-stone-900">Outro</option>
                   </select>
-                  <ChevronRight size={18} className="absolute right-4 top-1/2 -translate-y-1/2 rotate-90 text-stone-500 pointer-events-none" />
+                  <ChevronDown size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-stone-500 pointer-events-none" />
                 </div>
               </div>
             )}
@@ -499,64 +503,64 @@ const CampaignDetail: React.FC = () => {
               <div className="space-y-2">
                 <label className="text-[10px] font-medieval uppercase tracking-[0.2em] text-amber-500 mb-2 block opacity-60">Grau de Ameaça</label>
                 <div className="relative">
-                  <select value={selectedItem?.difficulty || 'Médio'} onChange={e => setSelectedItem({...selectedItem, difficulty: e.target.value})} className="w-full bg-stone-950 border border-stone-800 rounded-2xl p-4 text-white outline-none appearance-none font-story text-lg focus:border-amber-500 transition-all shadow-inner">
+                  <select value={selectedItem?.difficulty || 'Médio'} onChange={e => setSelectedItem({...selectedItem, difficulty: e.target.value})} className="w-full bg-stone-950 border border-stone-800 rounded-xl md:rounded-2xl p-4 text-white outline-none appearance-none font-story text-base md:text-lg focus:border-amber-500 transition-all shadow-inner cursor-pointer">
                     <option value="Fácil" className="bg-stone-900">Fácil</option>
                     <option value="Médio" className="bg-stone-900">Médio</option>
                     <option value="Difícil" className="bg-stone-900">Difícil</option>
                     <option value="Lendário" className="bg-stone-900">Lendário</option>
                   </select>
-                  <ChevronRight size={18} className="absolute right-4 top-1/2 -translate-y-1/2 rotate-90 text-stone-500 pointer-events-none" />
+                  <ChevronDown size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-stone-500 pointer-events-none" />
                 </div>
               </div>
             )}
           </div>
 
           <div className="space-y-2">
-            <label className="text-[10px] font-medieval uppercase tracking-[0.2em] text-amber-500 mb-2 block opacity-60">Narrativa (Descrição)</label>
-            <textarea rows={4} value={selectedItem?.description || ''} onChange={e => setSelectedItem({...selectedItem, description: e.target.value})} className="w-full bg-stone-950 border border-stone-800 rounded-2xl p-4 text-white focus:border-amber-500 outline-none resize-none font-story text-base shadow-inner leading-relaxed transition-all" />
+            <label className="text-[10px] font-medieval uppercase tracking-[0.2em] text-amber-500 mb-2 block opacity-60">Narrativa (Resumo)</label>
+            <textarea rows={3} value={selectedItem?.description || ''} onChange={e => setSelectedItem({...selectedItem, description: e.target.value})} className="w-full bg-stone-950 border border-stone-800 rounded-xl md:rounded-2xl p-4 text-white focus:border-amber-500 outline-none resize-none font-story text-sm md:text-base shadow-inner leading-relaxed transition-all" />
           </div>
 
           {activeTab === 'CHARACTERS' && (
              <div className="space-y-2">
                 <label className="text-[10px] font-medieval uppercase tracking-[0.2em] text-amber-500 mb-2 block opacity-60">Crônicas do Passado (História)</label>
-                <textarea rows={4} value={selectedItem?.history || ''} onChange={e => setSelectedItem({...selectedItem, history: e.target.value})} className="w-full bg-stone-950 border border-stone-800 rounded-2xl p-4 text-white focus:border-amber-500 outline-none resize-none font-story text-base shadow-inner leading-relaxed transition-all" />
+                <textarea rows={4} value={selectedItem?.history || ''} onChange={e => setSelectedItem({...selectedItem, history: e.target.value})} className="w-full bg-stone-950 border border-stone-800 rounded-xl md:rounded-2xl p-4 text-white focus:border-amber-500 outline-none resize-none font-story text-sm md:text-base shadow-inner leading-relaxed transition-all" />
              </div>
           )}
 
-          <div className="flex items-center justify-between py-4 border-t border-amber-900/10">
-            <div className="flex items-center gap-3">
-              <label className="text-[10px] font-medieval uppercase tracking-[0.2em] text-amber-500/60">Revelar para Viajantes?</label>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between py-4 border-t border-amber-900/10 gap-6">
+            <div className="flex items-center gap-4">
+              <label className="text-[10px] font-medieval uppercase tracking-[0.2em] text-amber-500/60 leading-none">Visibilidade para Jogadores</label>
               <button 
                 type="button"
                 onClick={() => setSelectedItem({...selectedItem, isVisibleToPlayers: !selectedItem.isVisibleToPlayers})}
-                className={`w-12 h-6 rounded-full p-1 transition-all ${selectedItem?.isVisibleToPlayers ? 'bg-amber-500' : 'bg-stone-800'}`}
+                className={`w-12 h-6 rounded-full p-1 transition-all shrink-0 ${selectedItem?.isVisibleToPlayers ? 'bg-amber-500' : 'bg-stone-800'}`}
               >
                 <div className={`w-4 h-4 bg-white rounded-full transition-transform ${selectedItem?.isVisibleToPlayers ? 'translate-x-6' : 'translate-x-0'}`} />
               </button>
             </div>
             
             {activeTab === 'CHARACTERS' && (
-               <div className="space-y-2 min-w-[180px]">
-                 <label className="text-[10px] font-medieval uppercase tracking-[0.2em] text-amber-500/60 mb-2 block">Estado Vital</label>
+               <div className="space-y-2 min-w-full sm:min-w-[200px]">
+                 <label className="text-[10px] font-medieval uppercase tracking-[0.2em] text-amber-500/60 mb-2 block leading-none">Estado Vital</label>
                  <div className="relative">
                    <select 
                      value={selectedItem?.status || ItemStatus.ALIVE} 
                      onChange={e => setSelectedItem({...selectedItem, status: e.target.value})} 
-                     className="w-full bg-stone-950 border border-stone-800 rounded-xl p-3 text-white outline-none appearance-none font-story text-sm focus:border-amber-500 transition-all"
+                     className="w-full bg-stone-950 border border-stone-800 rounded-xl p-3 text-white outline-none appearance-none font-story text-sm focus:border-amber-500 transition-all cursor-pointer"
                    >
                       <option value={ItemStatus.ALIVE} className="bg-stone-900">Vivo</option>
                       <option value={ItemStatus.DEAD} className="bg-stone-900">Perecido</option>
                       <option value={ItemStatus.MISSING} className="bg-stone-900">Desaparecido</option>
                       <option value={ItemStatus.UNKNOWN} className="bg-stone-900">Desconhecido</option>
                    </select>
-                   <ChevronRight size={14} className="absolute right-3 top-1/2 -translate-y-1/2 rotate-90 text-stone-500 pointer-events-none" />
+                   <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-500 pointer-events-none" />
                  </div>
                </div>
             )}
           </div>
 
-          <div className="pt-4">
-            <Button fullWidth size="lg" type="submit" disabled={isSaving} className="shadow-2xl text-xs tracking-[0.3em] py-5">
+          <div className="pt-4 pb-2">
+            <Button fullWidth size="lg" type="submit" disabled={isSaving} className="shadow-2xl text-[11px] md:text-xs tracking-[0.3em] py-4 md:py-5">
               {isSaving ? 'CONJURANDO...' : `GRAVAR NAS CRÔNICAS`}
             </Button>
           </div>
@@ -565,10 +569,10 @@ const CampaignDetail: React.FC = () => {
 
       <Modal isOpen={isDeleteModalOpen} onClose={() => setIsDeleteModalOpen(false)} title="SENTENÇA DE ESQUECIMENTO" size="md">
         <div className="flex flex-col items-center text-center">
-          <div className="w-20 h-20 bg-red-950/20 border border-red-500/30 rounded-full flex items-center justify-center mb-8 shadow-inner">
+          <div className="w-16 h-16 md:w-20 md:h-20 bg-red-950/20 border border-red-500/30 rounded-full flex items-center justify-center mb-6 md:mb-8 shadow-inner">
             <Trash2 size={32} className="text-red-500 animate-pulse" />
           </div>
-          <p className="font-medieval text-xl text-stone-100 uppercase tracking-widest mb-6 px-4">Deseja realmente banir este registro das crônicas para sempre?</p>
+          <p className="font-medieval text-lg md:text-xl text-stone-100 uppercase tracking-widest mb-6 px-4 leading-relaxed">Deseja realmente banir este registro das crônicas para sempre?</p>
           <div className="flex flex-col w-full gap-4">
             <Button variant="danger" fullWidth onClick={confirmDelete} disabled={isSaving} className="py-4 text-xs tracking-widest">CONFIRMAR SENTENÇA</Button>
             <Button variant="secondary" fullWidth onClick={() => setIsDeleteModalOpen(false)} className="py-4 text-xs tracking-widest">VOLTAR AO REINO</Button>
@@ -580,7 +584,7 @@ const CampaignDetail: React.FC = () => {
 };
 
 const NavTab: React.FC<{ active: boolean; onClick: () => void; icon: React.ReactNode; label: string }> = ({ active, onClick, icon, label }) => (
-  <button onClick={onClick} className={`flex items-center gap-2 px-8 py-6 transition-all font-medieval text-[10px] uppercase tracking-[0.3em] whitespace-nowrap border-b-2 relative group ${active ? 'text-amber-500 border-amber-500 bg-amber-500/5' : 'text-stone-600 border-transparent hover:text-amber-500/60'}`}>
+  <button onClick={onClick} className={`flex items-center gap-2 px-6 py-4 md:px-8 md:py-6 transition-all font-medieval text-[9px] md:text-[10px] uppercase tracking-[0.3em] whitespace-nowrap border-b-2 relative group ${active ? 'text-amber-500 border-amber-500 bg-amber-500/5' : 'text-stone-600 border-transparent hover:text-amber-500/60'}`}>
     {active && (
       <motion.div layoutId="tab-glow" className="absolute inset-0 bg-gradient-to-t from-amber-500/10 to-transparent" />
     )}
