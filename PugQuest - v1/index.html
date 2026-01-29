@@ -4,7 +4,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pug Quest | Your Epic Journey Begins</title>
+    <title>Pug Quest</title>
+    <!-- Favicon de Dado D20 Épico -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>🎲</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -93,6 +95,12 @@
       .amber-glow {
         text-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
       }
+
+      @media (max-width: 640px) {
+        .glass-card {
+          border-radius: 1rem;
+        }
+      }
     </style>
   <script type="importmap">
 {
@@ -109,7 +117,6 @@
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
 </head>
   <body>
     <div id="root"></div>
